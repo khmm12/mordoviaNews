@@ -1,0 +1,9 @@
+%ul.nav.nav-stacked.nav-pills
+    %li
+        %a.glyphicon.glyphicon-chevron-left(href='' back-button)Назад
+    %li(ui-sref-active='active')
+        %a(ui-sref='news.all') Все новости
+    %li.nav-header.disabled
+        %a По категориям
+    %li(ng-repeat='item in items' ui-sref-active='active')
+        %a(ui-sref='news.category_all({category_name: item.link})' ui-sref-opts='{inherit: false}' ng-bind='item.title')

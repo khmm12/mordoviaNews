@@ -1,0 +1,23 @@
+%div(ng-app='MordoviaNews')
+    %header
+        .container
+            %nav.navbar.navbar-default
+                .navbar-header
+                    %a.navbar-brand(ui-sref='home')
+                        =image_tag 'mordovia_2.png'
+                        Новости Мордовии
+                .collapse.navbar-collapse
+                    %ul.nav.navbar-nav.navbar-right
+                        %li(ng-class="{active: $state.includes('news')}")
+                            %a(ui-sref='news.all' ui-sref-opts='{inherit: false}') Новости
+                        %li(ui-sref-active='active')
+                            %a(ui-sref='about') О приложении
+    .container
+        .row
+            .col-xs-2
+                %div(ui-view='AsideMenu')
+            .col-xs-8
+                .container-fluid(ui-view)
+            .col-xs-2
+                %div
+                    %span.text-muted Тут могла бы быть ваша реклама

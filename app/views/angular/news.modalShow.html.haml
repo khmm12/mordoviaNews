@@ -1,0 +1,5 @@
+%h2.text-center(ng-hide='isLoaded') Идет загрузка...
+.news_content
+    %h4.text-center(ng-bind='new.title')
+    %p
+        %div(ng-bind-html=' to_trusted(new.content) ')

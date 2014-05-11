@@ -1,0 +1,20 @@
+%span.text-center-muted(ng-hide='isLoaded') Идет загрузка...
+%h4.text-center(ng-bind='page_title')
+.news_item(ng-repeat='new in news')
+    .row
+        .col-xs-3
+            %img.img-responsive(ng-src='{{new.avatar_medium_url}}')
+        .col-xs-9
+            %h4.news_title
+                %a(ui-sref='news.show({news_id: new.id})' ng-bind='new.title')
+                %span.pull-right.glyphicon.glyphicon-resize-full(ng-click=' modal_show(new) ')
+            .news_info
+                {{new.date | date : 'EEEE, d MMMM, y H:mm'}}
+                %a.pull-right(ui-sref=' news.category_all({category_name: getCategory(new).title_latin}) ' ui-sref-opts='{inherit: false}' ng-bind='getCategory(new).title')
+            %div(ng-bind-html=' to_trusted(new.content) ')
+
+.text-center
+    %pagination.center(ng-show=' paginationShow() ' ng-change=' pageChanged() ' ng-model='currentPage' total-items='totalItems'
+        items-per-page='itemsPerPage' max-size='5' boundary-links='true'
+        num-pages='numPages' rotate='false'){'previous-text' => '&lsaquo;'.html_safe,
+        'next-text' => '&rsaquo;'.html_safe, 'first-text' => '&laquo;'.html_safe, 'last-text' => '&raquo;'.html_safe}
