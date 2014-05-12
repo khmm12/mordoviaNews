@@ -1,5 +1,5 @@
 %h2.text-center(ng-hide='isLoaded') Идет загрузка...
-.news_content
+.news_content(ng-show='isLoaded')
     %h4.text-center(ng-bind='new.title')
     .news_info
         {{new.date | date : 'EEEE, d MMMM, y H:mm'}}
