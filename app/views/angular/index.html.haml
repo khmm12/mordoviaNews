@@ -33,7 +33,7 @@
                     %p.pull-left.text-muted there is some content...
                 .col-xs-4
                     %p.text-center.text-muted
-                        Просмотренных новостей: {{ (100 * newsViewed.value / newsLength) | number:0 }}%
+                        Просмотренных новостей: {{newsViewed.value}} ({{ (100 * newsViewed.value / newsLength) | number:0 }}%)
                         \-
                         %a.text-muted(ng-click = 'resetViewedNews() ') Сбросить
                 .col-xs-4
