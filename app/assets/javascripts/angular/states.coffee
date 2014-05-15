@@ -8,6 +8,18 @@
       templateUrl: getTemplateUrl 'home'
     }
   )
+  .state('login', {
+      url: '/login'
+      controller: 'LoginCtrl'
+      templateUrl: getTemplateUrl 'login'
+    }
+  )
+  .state('sign_up', {
+      url: '/sign_up'
+      controller: 'SignUpCtrl'
+      templateUrl: getTemplateUrl 'sign_up'
+    }
+  )
   .state('about', {
       url: '/about'
       templateUrl: getTemplateUrl 'about'

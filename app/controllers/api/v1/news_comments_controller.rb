@@ -1,6 +1,7 @@
 module Api
     module V1
         class NewsCommentsController < ApplicationController
+            before_action :authenticate_user!, :except => [:index]
             respond_to :json
             def index
                 @news_comments = NewsComment.where(news_id: params[:news_id]).order('created_at DESC').all
@@ -12,6 +13,7 @@ module Api
 
             def create
                 @news_comment = NewsComment.new news_comment_params
+                @news_comment.user = current_user
                 @news_comment.news_id = params[:news_id]
                 @news_comment.ip = request.remote_ip
                 @news_comment.save
@@ -20,7 +22,7 @@ module Api
             end
 
             def news_comment_params
-                params.require(:news_comment).permit(:email, :name, :content)
+                params.require(:news_comment).permit(:content)
             end
         end
     end

@@ -47,7 +47,7 @@
   $scope.getNews()
 ]
 
-NewsShowModalCtrl = ['$scope', 'News', '$sce', '$modalInstance', 'id', '$timeout', '$window', ($scope, News, $sce, $modalInstance, id, $timeout, $window) ->
+NewsShowModalCtrl = ['$scope', 'News', '$sce', '$modalInstance', 'id', '$timeout', '$window', '$localStorage', ($scope, News, $sce, $modalInstance, id, $timeout, $window, $localStorage) ->
   # Сrutch, without any timeout it doesn't work
   $timeout((->
     angular.element('.modal-content').css('height', $window.innerHeight * 0.9 + 'px'))
@@ -57,12 +57,20 @@ NewsShowModalCtrl = ['$scope', 'News', '$sce', '$modalInstance', 'id', '$timeout
   $scope.isLoaded = false
   News.rest.one(id).get().then (news) ->
     $scope.new = news
+    pagesStatistics($localStorage, news.id)
     $scope.isLoaded = true
   $scope.to_trusted = (html_code) ->
     $sce.trustAsHtml(html_code)
 ]
 
-@MordoviaNews.controller 'NewsShowCtrl', ['$scope', 'News', '$stateParams', '$sce', 'news_categories', ($scope, News, $stateParams, $sce, news_categories) ->
+@MordoviaNews.controller 'NewsShowCtrl', ['$scope', 'News', '$stateParams', '$sce', 'news_categories', '$localStorage', ($scope, News, $stateParams, $sce, news_categories, $localStorage) ->
+  $scope.storage = $localStorage.$default {
+    viewedNews: {
+      ids: { }
+      value: 0
+    }
+  }
+
   $scope.new = {}
   $scope.isLoaded = false
   $scope.getCategory = (news_object) ->
@@ -72,17 +80,14 @@ NewsShowModalCtrl = ['$scope', 'News', '$sce', '$modalInstance', 'id', '$timeout
   News.rest.one($stateParams.news_id).get().then (news) ->
     $scope.new = news
     $scope.comments = news.getList('news_comments').$object
+    pagesStatistics($localStorage, news.id)
     $scope.isLoaded = true
 
   $scope.comment = {
     model: {
-      name: ''
-      email: ''
       content: ''
     }
     reset: ->
-      $scope.comment.model.name = ''
-      $scope.comment.model.email = ''
       $scope.comment.model.content = ''
       $scope.new_comment.$setPristine()
       $scope.comment.isFormShowen = false
@@ -109,3 +114,17 @@ NewsShowModalCtrl = ['$scope', 'News', '$sce', '$modalInstance', 'id', '$timeout
     }
     $scope.items.push item
 ]
+
+pagesStatistics = ($localStorage, news_id) ->
+    storage = $localStorage.$default {
+      viewedNews: {
+        ids: { }
+        value: 0
+      }
+    }
+    if storage.viewedNews.ids[news_id]
+      storage.viewedNews.ids[news_id] += 1
+    else
+      storage.viewedNews.ids[news_id] = 1
+      storage.viewedNews.value += 1
+    null

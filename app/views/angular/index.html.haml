@@ -12,6 +12,10 @@
                             %a(ui-sref='news.all' ui-sref-opts='{inherit: false}') Новости
                         %li(ui-sref-active='active')
                             %a(ui-sref='about') О приложении
+                        %li(ng-show=' Auth.isAuthenticated() ')
+                            %a(ng-click=' Auth.logout() ' href='') Выйти
+                        %li(ng-hide=' Auth.isAuthenticated() 'ui-sref-active='active')
+                            %a(ui-sref='login') Войти
     .container
         .row
             .col-xs-2
@@ -21,3 +25,16 @@
             .col-xs-2
                 %div
                     %span.text-muted Тут могла бы быть ваша реклама
+
+    %footer
+        .container
+            .row
+                .col-xs-4
+                    %p.pull-left.text-muted there is some content...
+                .col-xs-4
+                    %p.text-center.text-muted
+                        Просмотренных новостей: {{ (100 * newsViewed.value / newsLength) | number:0 }}%
+                        \-
+                        %a.text-muted(ng-click = 'resetViewedNews() ') Сбросить
+                .col-xs-4
+                    %p.pull-right.text-muted ...but it's hidden from your eyes

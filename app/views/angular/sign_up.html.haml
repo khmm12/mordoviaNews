@@ -1,0 +1,24 @@
+%form.form-horizontal(name='register_form' data-ng-submit=' register() ')
+    .form-group(ng-class=" {true: 'has-error',false: 'is-required'}[register_form.username.$dirty && register_form.username.$invalid || register_form.username.hasErrors] ")
+        %label.col-sm-3.control-label Ваш логин
+        .col-sm-9
+            %input.form-control(ng-model='user.username' name='username' type='text' ng-required='true' placeholder='Логин')
+    .form-group(ng-class=" {true: 'has-error',false: 'is-required'}[register_form.name.$dirty && register_form.name.$invalid || register_form.name.hasErrors] ")
+        %label.col-sm-3.control-label Ваше имя
+        .col-sm-9
+            %input.form-control(ng-model='user.name' name='name' type='text' ng-required='true' placeholder='Имя')
+    .form-group(ng-class=" {true: 'has-error',false: 'is-required'}[register_form.email.$dirty && register_form.email.$invalid || register_form.email.hasErrors] ")
+        %label.col-sm-3.control-label Ваша почта
+        .col-sm-9
+            %input.form-control(ng-model='user.email' name='email' type='email' ng-required='true' placeholder='Почта')
+    .form-group(ng-class=" {true: 'has-error',false: 'is-required'}[register_form.password.$dirty && register_form.password.$invalid || register_form.password.hasErrors] ")
+        %label.col-sm-3.control-label Ваш пароль
+        .col-sm-9
+            %input.form-control(ng-model='user.password' name='password' type='password' ng-required='true' placeholder='Пароль')
+    .form-group(ng-class=" {true: 'has-error',false: 'is-required'}[register_form.password_confirmation.$dirty && register_form.password_confirmation.$invalid || register_form.password_confirmation.hasErrors] ")
+        %label.col-sm-3.control-label Подтверждение пароля
+        .col-sm-9
+            %input.form-control(ng-model='user.password_confirmation' name='password_confirmation' type='password' ng-required='true' placeholder='Подтверждение пароля')
+    .form-group
+        .col-sm-offset-3.col-sm-9
+            %button.btn.btn-default(type='submit' ng-disabled='register_form.$invalid ' ng-class=" {false: 'btn btn-success', true: 'btn btn-default'}[register_form.$invalid] ") Зарегистрироваться

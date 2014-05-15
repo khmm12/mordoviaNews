@@ -9,17 +9,12 @@
 
 %div.comments_block(ng-show='comment')
     %h5 Комментарии:
-    %div.new_comment_form
+    %div(ng-hide=' Auth.isAuthenticated() ')
+        Прежде чем оставить свой комменатарий неплохо бы
+        %a(ui-sref=' login() ') войти
+    .new_comment_form(ng-show=' Auth.isAuthenticated() ')
         %button.btn(ng-click="comment.isFormShowen = ! comment.isFormShowen") Оставить комменатарий
         %form.form-horizontal(name='new_comment' data-ng-submit=' comment.post() ' ng-show='comment.isFormShowen')
-            .form-group(ng-class=" {true: 'has-error',false: 'is-required'}[new_comment.username.$dirty && new_comment.username.$invalid] ")
-                %label.col-sm-3.control-label Ваше имя
-                .col-sm-9
-                    %input.form-control(ng-model='comment.model.name' name='username' type='text' ng-minlength='3' ng-maxlength='15' ng-required='true')
-            .form-group(ng-class=" {true: 'has-error',false: 'is-required'}[new_comment.email.$dirty && new_comment.email.$invalid] ")
-                %label.col-sm-3.control-label Ваша почта
-                .col-sm-9
-                    %input.form-control(ng-model='comment.model.email' name='email' type='email' ng-required='true' )
             .form-group(ng-class=" {true: 'has-error',false: 'is-required'}[new_comment.content.$dirty && new_comment.content.$invalid] ")
                 %label.col-sm-3.control-label Ваш комменатарий
                 .col-sm-9
@@ -30,9 +25,8 @@
     .comments
         .comment(ng-repeat='comment in comments')
             %div
-                %span(ng-bind='comment.name')
+                %span(ng-bind='comment.user.name')
                 |
                 %span(ng-bind="comment.date | date: 'EEEE, d MMMM, y H:mm'")
-            %div
-                %p(ng-bind='comment.content')
+            %p(ng-bind='comment.content')
 

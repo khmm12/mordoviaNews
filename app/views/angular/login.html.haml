@@ -1,0 +1,17 @@
+%flash-messages
+%form.form-horizontal(name='login_form' data-ng-submit=' login() ')
+    .form-group(ng-class=" {true: 'has-error',false: 'is-required'}[login_form.username.$dirty && login_form.username.$invalid] ")
+        %label.col-sm-3.control-label Ваш логин
+        .col-sm-9
+            %input.form-control(ng-model='user.username' name='username' type='text' ng-required='true' placeholder='Логин или почта')
+    .form-group(ng-class=" {true: 'has-error',false: 'is-required'}[login_form.password.$dirty && login_form.password.$invalid] ")
+        %label.col-sm-3.control-label Ваш пароль
+        .col-sm-9
+            %input.form-control(ng-model='user.password' name='password' type='password' ng-required='true' placeholder='Пароль')
+    .form-group
+        .col-sm-offset-3.col-sm-9
+            %button.btn.btn-default(type='submit' ng-disabled='login_form.$invalid ' ng-class=" {false: 'btn btn-success', true: 'btn btn-default'}[login_form.$invalid] ") Войти
+
+%p.text-center
+    У Вас нет учетной записи? Давайте её заведем.
+    %a(ui-sref=' sign_up() ') Регистрация
